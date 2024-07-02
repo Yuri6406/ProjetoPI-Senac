@@ -40,7 +40,6 @@ public class Advogado {
 
 	public Advogado(String nome, String numeroOAB, String especializacao, String telefone, String email, String cep,
 			String logradouro, String numCasa, String bairro, String cidade, String estado) {
-		super();
 		this.nome = nome;
 		this.numeroOAB = numeroOAB;
 		this.especializacao = especializacao;

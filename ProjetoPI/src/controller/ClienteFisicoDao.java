@@ -81,35 +81,41 @@ public class ClienteFisicoDao {
 	}
 
 	// Seleionando o clienteFisico por ID
-	public void selecionarClienteFisico(ClienteFisico clienteFisico) {
+	public ClienteFisico selecionarClienteFisico(int id) {
+		ClienteFisico cltF = null;
 		String read = "select * from clientefisico where idClienteFisico = ?";
 		try {
 			// Abrir a conexão
 			Connection conn = Conexao.getConnection();
 			// Preparar a query para execução no banco de dados
 			PreparedStatement pstm = conn.prepareStatement(read);
-			pstm.setLong(1, clienteFisico.getIdClienteFisico());
+			pstm.setLong(1, id);
 			ResultSet rs = pstm.executeQuery();
 			while (rs.next()) {
 
 				// Setando as variáveis de produto
-				clienteFisico.setIdClienteFisico(rs.getInt(1));
-				clienteFisico.setNome(rs.getString(2));
-				clienteFisico.setCpf(rs.getString(3));
-				clienteFisico.setTelefone(rs.getString(4));
-				clienteFisico.setEmail(rs.getString(5));
-				clienteFisico.setCep(rs.getString(6));
-				clienteFisico.setLogradouro(rs.getString(7));
-				clienteFisico.setNumCasa(rs.getString(8));
-				clienteFisico.setBairro(rs.getString(9));
-				clienteFisico.setCidade(rs.getString(10));
-				clienteFisico.setEstado(rs.getString(11));
+				id  = rs.getInt(1);
+				String nome = rs.getString(2);
+				String cpf = rs.getString(3);
+				String telefone = rs.getString(4);
+				String email = rs.getString(5);
+				String cep = rs.getString(6);
+				String logradouro = rs.getString(7);
+				String logrdouro = rs.getString(8);
+				String bairro = rs.getString(9);
+				String idade = rs.getString(10);
+				String estado = rs.getString(11);
+				
+				cltF = new ClienteFisico(id, nome, cpf, telefone, email, cep, logradouro, logrdouro, bairro, idade, estado);
 
 			}
+			rs.close();
+			pstm.close();
 			conn.close();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		return cltF;
 	}
 
 	// Editando o clienteFisico
@@ -133,7 +139,7 @@ public class ClienteFisicoDao {
 			pstmm.setInt(11, clienteFisico.getIdClienteFisico());
 
 			pstmm.executeUpdate();
-
+			pstmm.close();
 			conn.close();
 		} catch (Exception e) {
 			System.out.println(e);
