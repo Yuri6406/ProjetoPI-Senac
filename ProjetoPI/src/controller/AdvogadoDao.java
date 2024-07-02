@@ -81,7 +81,7 @@ public class AdvogadoDao {
 	}
 
 	// Seleionando o advogado por ID
-	public Advogado selecionarAdvogado(Advogado advogado) {
+	public Advogado selecionarAdv(Advogado advogado) {
 		String read = "select * from advogados where idAdvogados = ?";
 		try {
 			// Abrir a conexão
@@ -143,8 +143,8 @@ public class AdvogadoDao {
 	}
 
 	/** DELETE **/
-	public void deletarAdvogado(Advogado advogado) {
-		String delete = "delete from Advogados where idAdvogados=?";
+	public void deletarAdv(Advogado advogado) {
+		String delete = "delete from advogados where idAdvogados=?";
 		try {
 			// Abrir a conexão
 			Connection conn = Conexao.getConnection();

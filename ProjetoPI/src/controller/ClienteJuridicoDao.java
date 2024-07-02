@@ -43,7 +43,7 @@ public class ClienteJuridicoDao {
 		
 		public ArrayList<ClienteJuridico> listaClienteJuridico() {
 			ArrayList<ClienteJuridico> clienteJuridico = new ArrayList<>();
-			String read = "select * from clienteJuridico order by nome";
+			String read = "select * from clienteJuridico order by razaoSocial";
 			Connection conn = null;
 			PreparedStatement pstmm = null;
 			try {
@@ -80,41 +80,44 @@ public class ClienteJuridicoDao {
 		}
 		
 		// Seleionando o ClienteJuridico por ID
-		public void selecionarClienteFisico(ClienteJuridico clienteJuridico) {
+		public ClienteJuridico selecionarClienteJuridico(int id) {
+			ClienteJuridico cltJ = null;
 			String read = "select * from clienteJuridico where idClienteJuridico = ?";
 			try {
 				// Abrir a conexão
 				Connection conn = Conexao.getConnection();
 				// Preparar a query para execução no banco de dados
 				PreparedStatement pstm = conn.prepareStatement(read);
-				pstm.setLong(1, clienteJuridico.getIdClienteJuridico());
+				pstm.setLong(1, id);
 				ResultSet rs = pstm.executeQuery();
 				while (rs.next()) {
 
 					// Setando as variáveis de produto
-					clienteJuridico.setIdClienteJuridico(rs.getInt(1));
-					clienteJuridico.setRazaoSocial(rs.getString(2));
-					clienteJuridico.setCnpj(rs.getString(3));
-					clienteJuridico.setTelefone(rs.getString(4));
-					clienteJuridico.setEmail(rs.getString(5));
-					clienteJuridico.setCep(rs.getString(6));
-					clienteJuridico.setLogradouro(rs.getString(7));
-					clienteJuridico.setNumCasa(rs.getString(8));
-					clienteJuridico.setBairro(rs.getString(9));
-					clienteJuridico.setCidade(rs.getString(10));
-					clienteJuridico.setEstado(rs.getString(11));
+					id = rs.getInt(1);
+					String razaoSocial = rs.getString(2);
+					String cnpj = rs.getString(3);
+					String telefone = rs.getString(4);
+					String email = rs.getString(5);
+					String cep = rs.getString(6);
+					String logradouro = rs.getString(7);
+					String numCasa = rs.getString(8);
+					String bairro = rs.getString(9);
+					String cidade =rs.getString(10);
+					String estado = rs.getString(11);
 					
 				
+					cltJ = new ClienteJuridico(id, razaoSocial, cnpj, telefone, email, cep, logradouro, numCasa, bairro, cidade, estado);
 				}
 				conn.close();
 			} catch (Exception e) {
 				System.out.println(e);
 			}
+			return cltJ;
 		}
 		
 		// Editando o ClienteJuridico
-		public void alterarClienteFisico(ClienteJuridico clienteJuridico) {
-			String create = "update clienteJuridico set razaSocial=?,cnpj=?, telefone=?, email=?, cep=?, logradouro=?,numCasa=?, bairro=?, cidade=?, estado=? where idClienteJuridico=?";
+		public void alterarClienteJuridico(ClienteJuridico clienteJuridico) {
+			String create = "update clienteJuridico set razaoSocial=?,cnpj=?, telefone=?, email=?, cep=?, logradouro=?,numCasa=?, bairro=?, cidade=?, estado=? where idClienteJuridico=?";
 			try {
 				// Abrir a conexão
 				Connection conn = Conexao.getConnection();
@@ -133,7 +136,7 @@ public class ClienteJuridicoDao {
 				pstmm.setInt(11, clienteJuridico.getIdClienteJuridico());
 
 				pstmm.executeUpdate();
-				
+				pstmm.close();
 				conn.close();
 			} catch (Exception e) {
 				System.out.println(e);
@@ -141,7 +144,7 @@ public class ClienteJuridicoDao {
 		}
 
 		/** DELETE **/
-		public void deletarClienteFisico(ClienteJuridico clienteJuridico) {
+		public void deletarClienteJuridico(ClienteJuridico clienteJuridico) {
 			String delete = "delete from clienteJuridico where idClienteJuridico=?";
 			try {
 				// Abrir a conexão
