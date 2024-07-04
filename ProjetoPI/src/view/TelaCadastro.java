@@ -147,7 +147,7 @@ public class TelaCadastro extends JFrame {
 				atualizarTabelaCltF();
 			}
 		});
-		btnListaCltF.setBounds(57, 418, 101, 21);
+		btnListaCltF.setBounds(57, 418, 112, 21);
 		painelListaCltF.add(btnListaCltF);
 
 		JButton btnDeletarCltF = new JButton("Excluir");
@@ -157,7 +157,7 @@ public class TelaCadastro extends JFrame {
 				atualizarTabelaCltF();
 			}
 		});
-		btnDeletarCltF.setBounds(160, 418, 85, 21);
+		btnDeletarCltF.setBounds(179, 418, 85, 21);
 		painelListaCltF.add(btnDeletarCltF);
 
 		JButton btnAlterarCltF = new JButton("Alterar");
@@ -168,7 +168,7 @@ public class TelaCadastro extends JFrame {
 
 			}
 		});
-		btnAlterarCltF.setBounds(249, 418, 85, 21);
+		btnAlterarCltF.setBounds(268, 418, 85, 21);
 		painelListaCltF.add(btnAlterarCltF);
 
 		JLabel lblNewLabel = new JLabel("Clientes F\u00EDsicos");
@@ -225,7 +225,7 @@ public class TelaCadastro extends JFrame {
 		btnAltCltJ.setBounds(292, 416, 85, 21);
 		painelListaCltJ.add(btnAltCltJ);
 
-		JLabel lblCltJ = new JLabel("Clientes Juridico");
+		JLabel lblCltJ = new JLabel("Clientes Juridicos");
 		lblCltJ.setForeground(new Color(0, 128, 192));
 		lblCltJ.setFont(new Font("Cambria", Font.BOLD, 18));
 		lblCltJ.setBounds(384, 10, 177, 32);
@@ -884,9 +884,7 @@ public class TelaCadastro extends JFrame {
 			Object idObj = tableAdv.getValueAt(linha, 0);
 			int id = (Integer) idObj;
 
-			Advogado advogado = new Advogado(id, null, null, null, null, null, null, null, null, null, null, null);
-
-			daoAdv.selecionarAdv(advogado);
+			Advogado advogado = daoAdv.selecionarAdv(id);
 
 			// Criando os campos de texto
 			JTextField tfNome = new JTextField(advogado.getNome());
@@ -954,9 +952,9 @@ public class TelaCadastro extends JFrame {
 				String bairro = tfBairro.getText();
 				String cidade = tfEstado.getText();
 				String estado = tfEstado.getText();
-				advogado = new Advogado(nome, numero, espec, tel, email, cep, logradouro, numero, bairro, cidade,
+				advogado = new Advogado(id,nome, numOAB, espec, tel, email, cep, logradouro, numero, bairro, cidade,
 						estado);
-
+				
 				daoAdv.alterarAdvogado(advogado);
 				atualizarTabelaAdv();
 
@@ -1032,7 +1030,6 @@ public class TelaCadastro extends JFrame {
 
 			ClienteFisico cltF = daoCltF.selecionarClienteFisico(id);
 
-			System.out.println(cltF);
 			// Criando os campos de texto
 			JTextField tfNome = new JTextField(cltF.getNome());
 			JTextField tfCpf = new JTextField(cltF.getCpf());
@@ -1226,6 +1223,7 @@ public class TelaCadastro extends JFrame {
 				String razaoSocial = tfRazaoSocial.getText();
 				String cnpj = tfCnpj.getText();
 				String telefone = tfTelefone.getText();
+				String cep = tfCep.getText();
 				String email = tfEmail.getText();
 				String logradouro = tfLogradouro.getText();
 				String numCasa = tfNumCasa.getText();
@@ -1233,7 +1231,7 @@ public class TelaCadastro extends JFrame {
 				String cidade = tfCidade.getText();
 				String estado = tfEstado.getText();
 
-				cltJ = new ClienteJuridico(id, razaoSocial, cnpj, telefone, email, email, logradouro, numCasa, bairro,
+				cltJ = new ClienteJuridico(id, razaoSocial, cnpj, telefone, cep, email, logradouro, numCasa, bairro,
 						cidade, estado);
 
 				daoCltJ.alterarClienteJuridico(cltJ);

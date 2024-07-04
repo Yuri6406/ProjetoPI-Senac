@@ -81,37 +81,42 @@ public class AdvogadoDao {
 	}
 
 	// Seleionando o advogado por ID
-	public Advogado selecionarAdv(Advogado advogado) {
+	public Advogado selecionarAdv(int id) {
+		Advogado adv = null;
 		String read = "select * from advogados where idAdvogados = ?";
 		try {
 			// Abrir a conexão
 			Connection conn = Conexao.getConnection();
 			// Preparar a query para execução no banco de dados
 			PreparedStatement pst = conn.prepareStatement(read);
-			pst.setLong(1, advogado.getIdAdvogado());
+			pst.setLong(1, id);
 			ResultSet rs = pst.executeQuery();
 
 			while (rs.next()) {
 				// Setando as variáveis de produto
-				advogado.setIdAdvogado(rs.getInt(1));
-				advogado.setNome(rs.getString(2));
-				advogado.setNumeroOAB(rs.getString(3));
-				advogado.setEspecializacao(rs.getString(4));
-				advogado.setTelefone(rs.getString(5));
-				advogado.setEmail(rs.getString(6));
-				advogado.setCep(rs.getString(7));
-				advogado.setLogradouro(rs.getString(8));
-				advogado.setNumCasa(rs.getString(9));
-				advogado.setBairro(rs.getString(10));
-				advogado.setCidade(rs.getString(11));
-				advogado.setEstado(rs.getString(12));
+				id = rs.getInt(1);
+				String nome = rs.getString(2);
+				String numeroOAB = rs.getString(3);
+				String especializacao = rs.getString(4);
+				String telefone = rs.getString(5);
+				String email = rs.getString(6);
+				String cep = rs.getString(7);
+				String ogradouro = rs.getString(8);
+				String numCasa = rs.getString(9);
+				String bairro = rs.getString(10);
+				String cidade = rs.getString(11);
+				String estado = rs.getString(12);
 
+				adv = new Advogado(id, nome, numeroOAB, especializacao, telefone, email, cep, ogradouro, numCasa, bairro, cidade, estado);
+				
 			}
+			rs.close();
+			pst.close();
 			conn.close();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return advogado;
+		return adv;
 	}
 
 	// Editando o advogado
